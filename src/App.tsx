@@ -25,6 +25,125 @@ function AnimatedSphere() {
   )
 }
 
+// Shining Stars component - round with glow
+function ShiningStars() {
+  const pointsRef = useRef<THREE.Points>(null)
+
+  // Create round star texture with bright sharp core
+  const starTexture = useMemo(() => {
+    const canvas = document.createElement('canvas')
+    canvas.width = 64
+    canvas.height = 64
+    const ctx = canvas.getContext('2d')!
+
+    // Create radial gradient with sharp bright core
+    const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32)
+    gradient.addColorStop(0, 'rgba(255, 255, 255, 1)')
+    gradient.addColorStop(0.2, 'rgba(255, 255, 255, 1)')
+    gradient.addColorStop(0.4, 'rgba(255, 255, 255, 0.8)')
+    gradient.addColorStop(0.6, 'rgba(255, 255, 255, 0.4)')
+    gradient.addColorStop(0.8, 'rgba(255, 255, 255, 0.1)')
+    gradient.addColorStop(1, 'rgba(255, 255, 255, 0)')
+
+    ctx.fillStyle = gradient
+    ctx.fillRect(0, 0, 64, 64)
+
+    // Add larger bright white circle in center for sharp visible core
+    ctx.beginPath()
+    ctx.arc(32, 32, 12, 0, Math.PI * 2)
+    ctx.fillStyle = 'rgba(255, 255, 255, 1)'
+    ctx.fill()
+
+    const texture = new THREE.CanvasTexture(canvas)
+    return texture
+  }, [])
+
+  const particlesGeometry = useMemo(() => {
+    const count = 150
+    const positions = new Float32Array(count * 3)
+    const colors = new Float32Array(count * 3)
+
+    // Star temperature colors: blue (hot) -> white/yellow -> orange -> red (cool)
+    // Using moderate brightness (1.0-1.5 range) for visible colors
+    const starColors = [
+      { r: 0.8, g: 1.0, b: 1.5 },   // Light blue (hot stars)
+      { r: 1.0, g: 1.2, b: 1.5 },   // Blue-white
+      { r: 1.5, g: 1.5, b: 1.5 },   // White
+      { r: 1.5, g: 1.5, b: 1.0 },   // Yellow-white
+      { r: 1.5, g: 1.3, b: 0.8 },   // Yellow
+      { r: 1.5, g: 1.0, b: 0.7 },   // Orange
+      { r: 1.5, g: 0.8, b: 0.7 },   // Light red
+    ]
+
+    for (let i = 0; i < count; i++) {
+      positions[i * 3] = (Math.random() - 0.5) * 12
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 8
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 6 - 2
+
+      // Random star color from the temperature range
+      const colorIndex = Math.floor(Math.random() * starColors.length)
+      const color = starColors[colorIndex]
+      colors[i * 3] = color.r
+      colors[i * 3 + 1] = color.g
+      colors[i * 3 + 2] = color.b
+    }
+
+    const geometry = new THREE.BufferGeometry()
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
+    return geometry
+  }, [])
+
+  useFrame(({ clock }) => {
+    if (pointsRef.current) {
+      const positions = pointsRef.current.geometry.attributes.position.array as Float32Array
+      for (let i = 0; i < positions.length; i += 3) {
+        // Simple twinkling by slightly moving stars
+        const i3 = i / 3
+        positions[i + 2] = Math.sin(clock.elapsedTime + i3) * 0.1 + ((i3 % 100) / 100) * 6 - 5
+      }
+      pointsRef.current.geometry.attributes.position.needsUpdate = true
+    }
+  })
+
+  // Custom shader material for colored stars
+  const shaderMaterial = useMemo(() => {
+    return new THREE.ShaderMaterial({
+      uniforms: {
+        pointTexture: { value: starTexture }
+      },
+      vertexShader: `
+        attribute vec3 color;
+        varying vec3 vColor;
+
+        void main() {
+          vColor = color;
+          vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+          gl_PointSize = 1.5 * (300.0 / -mvPosition.z);
+          gl_Position = projectionMatrix * mvPosition;
+        }
+      `,
+      fragmentShader: `
+        uniform sampler2D pointTexture;
+        varying vec3 vColor;
+
+        void main() {
+          vec4 texColor = texture2D(pointTexture, gl_PointCoord);
+          gl_FragColor = vec4(vColor * texColor.rgb, texColor.a);
+        }
+      `,
+      blending: THREE.AdditiveBlending,
+      depthTest: true,
+      depthWrite: false,
+      transparent: true
+    })
+  }, [starTexture])
+
+  return (
+    <points ref={pointsRef} geometry={particlesGeometry} material={shaderMaterial} />
+  )
+}
+
 // Plasma Infinity component
 function PlasmaInfinity() {
   const meshRef = useRef<THREE.Mesh>(null)
@@ -152,6 +271,7 @@ function App() {
         <div className="hero-3d">
           <Canvas camera={{ position: [0, 0, 5] }}>
             <ambientLight intensity={0.2} />
+            <ShiningStars />
             <PlasmaInfinity />
             <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.3} />
           </Canvas>
