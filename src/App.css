@@ -29,6 +29,19 @@ body {
   line-height: 1.6;
 }
 
+/* Gradient text for h1 and h2 headings */
+h1, h2 {
+  background: linear-gradient(135deg, #00D4FF 0%, #0066FF 30%, #7B2FFF 70%, #D946FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Keep h3 with solid color */
+h3 {
+  color: var(--text-primary);
+}
+
 .app {
   min-height: 100vh;
 }
@@ -126,10 +139,6 @@ body {
 .hero h1 {
   font-size: 4rem;
   font-weight: 800;
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
   margin-bottom: 1.5rem;
   line-height: 1.2;
 }
@@ -197,10 +206,6 @@ body {
   font-weight: 700;
   text-align: center;
   margin-bottom: 4rem;
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 /* Grid Layouts */
@@ -269,7 +274,6 @@ body {
 .feature-card h3 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
-  color: var(--text-primary);
 }
 
 .feature-card p {
@@ -293,7 +297,6 @@ body {
 .use-case-card h3 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
-  color: var(--text-primary);
 }
 
 .use-case-card p {
@@ -316,7 +319,6 @@ body {
 .audience-card h3 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
-  color: var(--text-primary);
 }
 
 .audience-card p {

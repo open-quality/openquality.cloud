@@ -1,8 +1,13 @@
-import { Canvas } from '@react-three/fiber'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, MeshDistortMaterial, Sphere } from '@react-three/drei'
 import { motion } from 'framer-motion'
+import { useRef, useMemo } from 'react'
+import * as THREE from 'three'
 import './App.css'
 
+// Liquid sphere component (kept for later use)
+// @ts-expect-error - Kept for future use
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function AnimatedSphere() {
   return (
     <Sphere args={[1, 128, 128]} scale={2.5}>
@@ -17,6 +22,107 @@ function AnimatedSphere() {
         transparent={true}
       />
     </Sphere>
+  )
+}
+
+// Plasma Infinity component
+function PlasmaInfinity() {
+  const meshRef = useRef<THREE.Mesh>(null)
+  const materialRef = useRef<THREE.ShaderMaterial>(null)
+
+  useFrame(({ clock }) => {
+    if (materialRef.current) {
+      materialRef.current.uniforms.uTime.value = clock.getElapsedTime()
+    }
+    if (meshRef.current) {
+      meshRef.current.rotation.y = Math.sin(clock.getElapsedTime() * 0.3) * 0.3
+      meshRef.current.rotation.x = Math.cos(clock.getElapsedTime() * 0.2) * 0.1
+    }
+  })
+
+  // Create infinity curve geometry
+  const geometry = useMemo(() => {
+    // Generate infinity symbol points
+    const points = []
+    const scale = 2
+    for (let i = 0; i <= 200; i++) {
+      const t = i / 200
+      const angle = t * Math.PI * 2
+      const x = scale * Math.cos(angle)
+      const y = scale * Math.sin(angle) * Math.cos(angle) * 0.7
+      const z = 0
+      points.push(new THREE.Vector3(x, y, z))
+    }
+
+    const curve = new THREE.CatmullRomCurve3(points, true)
+    return new THREE.TubeGeometry(curve, 200, 0.3, 32, true)
+  }, [])
+
+  // Plasma shader material
+  const vertexShader = `
+    varying vec2 vUv;
+    varying vec3 vPosition;
+    varying vec3 vNormal;
+
+    void main() {
+      vUv = uv;
+      vPosition = position;
+      vNormal = normal;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  `
+
+  const fragmentShader = `
+    uniform float uTime;
+    varying vec2 vUv;
+    varying vec3 vPosition;
+    varying vec3 vNormal;
+
+    vec3 palette(float t) {
+      vec3 a = vec3(0.2, 0.5, 0.8);
+      vec3 b = vec3(0.5, 0.3, 0.6);
+      vec3 c = vec3(1.0, 1.0, 1.0);
+      vec3 d = vec3(0.0, 0.33, 0.67);
+      return a + b * cos(6.28318 * (c * t + d));
+    }
+
+    void main() {
+      float time = uTime * 0.5;
+
+      // Plasma effect
+      float plasma1 = sin(vPosition.x * 3.0 + time);
+      float plasma2 = sin(vPosition.y * 3.0 + time * 1.3);
+      float plasma3 = sin((vPosition.x + vPosition.y) * 2.0 + time * 0.7);
+      float plasma = (plasma1 + plasma2 + plasma3) / 3.0;
+
+      // Color from palette
+      vec3 color = palette(plasma * 0.5 + 0.5);
+
+      // Add glow effect (brighter)
+      float fresnel = pow(1.0 - abs(dot(vNormal, vec3(0.0, 0.0, 1.0))), 2.0);
+      color += fresnel * vec3(0.3, 0.5, 0.8);
+
+      // Pulsing brightness (lighter)
+      float pulse = sin(time * 2.0) * 0.1 + 0.75;
+      color *= pulse;
+
+      gl_FragColor = vec4(color, 0.9);
+    }
+  `
+
+  return (
+    <mesh ref={meshRef} geometry={geometry}>
+      <shaderMaterial
+        ref={materialRef}
+        vertexShader={vertexShader}
+        fragmentShader={fragmentShader}
+        uniforms={{
+          uTime: { value: 0 }
+        }}
+        transparent={true}
+        side={THREE.DoubleSide}
+      />
+    </mesh>
   )
 }
 
@@ -45,10 +151,9 @@ function App() {
       <section className="hero">
         <div className="hero-3d">
           <Canvas camera={{ position: [0, 0, 5] }}>
-            <ambientLight intensity={0.5} />
-            <directionalLight position={[10, 10, 5]} intensity={1} />
-            <AnimatedSphere />
-            <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
+            <ambientLight intensity={0.2} />
+            <PlasmaInfinity />
+            <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.3} />
           </Canvas>
         </div>
         <div className="container">
