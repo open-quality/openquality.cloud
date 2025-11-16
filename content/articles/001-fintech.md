@@ -1,0 +1,129 @@
+**1/**  
+We recently talked with friends from a fintech company…  
+and the chaos they described around their environments was *next level*.
+
+If you work in fintech, this will sound painfully familiar. 👇  
+#fintech #testing #devops #quality
+
+---
+
+**2/**  
+They had *eight* environments:
+
+dev, dev2, qa, staging, uat, preprod, perf, prod.
+
+And somehow… they all behaved differently.  
+Each one was like a separate universe.
+
+“Which environment is correct?”  
+→ Depends who you ask. 😂
+
+---
+
+**3/**  
+Here’s the killer:  
+They ran tons of tests, but none of them were connected to a real SUT  
+(**Subject Under Test** — build, version, commit, image, etc.)
+
+So the test results basically said:  
+“Something passed somewhere at some point.”
+
+Useless.
+
+---
+
+**4/**  
+The team had test results scattered across:
+
+- Slack  
+- Jenkins  
+- PDFs  
+- Email  
+- Someone’s laptop  
+- Confluence  
+- Grafana  
+- Random folders  
+
+Finding test results took longer than fixing the bugs.
+
+---
+
+**5/**  
+This created the classic fintech failure pattern:
+
+Dev passes  
+Staging fails  
+“Ignore staging, it’s broken”  
+Release to prod  
+Prod fails  
+Panic meeting  
+Everyone shocked  
+Nobody knows what happened
+
+---
+
+**6/**  
+Why?  
+Because dev, staging, and prod were not aligned.
+
+Different configs.  
+Different data.  
+Different feature flags.  
+Different dependencies.  
+Different versions of microservices.
+
+A pipeline?  
+More like three separate ecosystems.
+
+---
+
+**7/**  
+One engineer literally told us:
+
+“We test the product… but we never know *which version* we tested.”
+
+That’s the root of the chaos.  
+If you don’t know the SUT, test results don’t mean anything.
+
+---
+
+**8/**  
+Fintech doesn’t need more tests.  
+Fintech needs **visibility**.
+
+Clear mapping of:
+
+- Environment  
+- Version  
+- Config  
+- Test results  
+- Changes  
+- Failures  
+- What moved where
+
+Without visibility, every environment is a lottery.
+
+---
+
+**9/**  
+If your environments feel like different planets…  
+If staging is “always broken”…  
+If prod surprises you…
+
+You’re not alone.  
+This is the norm in large fintech systems.
+
+But it’s fixable.
+
+---
+
+**10/**  
+We’re working on solving exactly this with **OpenQuality** —  
+real visibility across environments and test results tied to actual versions.
+
+Not more dashboards.  
+Not more reports.  
+Just *clarity* and *trust*.
+
+If your fintech is drowning in environment chaos, stay tuned. 🚀
+"From Test To Trust"
