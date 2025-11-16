@@ -19,7 +19,19 @@
               <img src="/logo.svg" alt="OpenQuality logo" />
               <span>{{ site.title }}</span>
             </a>
-            <div class="nav-links">
+            <button
+              class="nav-toggle"
+              type="button"
+              aria-label="Toggle navigation"
+              aria-expanded="false"
+              aria-controls="site-nav-links"
+              data-nav-toggle
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+            <div class="nav-links" id="site-nav-links" data-nav-links>
               {% for item in site.nav %}
                 <a
                   href="{{ item.url }}"
@@ -33,10 +45,10 @@
       </nav>
 
       <main>
+        {% if hero %}
+          {% include "components/hero.njk" %}
+        {% endif %}
         <div class="container">
-          {% if hero %}
-            {% include "components/hero.njk" %}
-          {% endif %}
           {{ content | safe }}
         </div>
       </main>
@@ -60,8 +72,9 @@
         </div>
       </footer>
     </div>
+    <script type="module" src="/assets/js/nav.js" defer></script>
     {% if hero %}
-      <script type="module" src="/assets/js/hero-scene.js" defer></script>
+      <script type="module" src="/assets/js/lightning.js" defer></script>
     {% endif %}
   </body>
 </html>

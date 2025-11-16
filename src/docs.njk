@@ -6,7 +6,7 @@ permalink: /docs/index.html
 <section class="section">
   <div class="page-intro">
     <h1>Documentation</h1>
-    <p>Pair the official docs with real stories from the field. Everything lives in Markdown so Eleventy and any CMS can own the publishing flow.</p>
+    <p>Pair the official docs with real stories from the field. Content stays in Markdown so product, marketing, and sales can all collaborate without custom tooling.</p>
   </div>
   <div class="docs-grid">
     {% for doc in highlights.docsSections %}
@@ -20,24 +20,8 @@ permalink: /docs/index.html
 
 <section class="section section-dark">
   <h2 class="section-title">Articles & Campaigns</h2>
-  <div class="stories">
-    {% for article in stories.articles %}
-      <article class="story-card">
-        <h4>{{ article.slug | replace('-', ' ') | title }}</h4>
-        <div class="story-body">{{ article.html | safe }}</div>
-      </article>
-    {% endfor %}
-  </div>
-</section>
-
-<section class="section">
-  <h2 class="section-title">Short Form</h2>
-  <div class="stories">
-    {% for short in stories.shorts %}
-      <article class="story-card">
-        <h4>{{ short.slug | replace('-', ' ') | title }}</h4>
-        <div class="story-body">{{ short.html | safe }}</div>
-      </article>
-    {% endfor %}
+  <p class="page-intro">Every launch inspires a story. Visit the blog for narrative walkthroughs, campaign snippets, and social-ready explainers.</p>
+  <div class="cta-buttons">
+    <a class="btn btn-secondary" href="/blog/">Browse the blog</a>
   </div>
 </section>

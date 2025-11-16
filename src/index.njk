@@ -3,80 +3,69 @@ layout: layouts/base.njk
 title: OpenQuality Cloud
 hero: true
 ---
-<section class="section">
-  <div class="grid-2">
-    <div>
-      <h2>{{ highlights.problemStatements.problem.title }}</h2>
-      <p class="text-large">{{ highlights.problemStatements.problem.summary }}</p>
-      <ul class="feature-list">
-        {% for item in highlights.problemStatements.problem.bullets %}
-          <li>{{ item }}</li>
-        {% endfor %}
-      </ul>
+<section class="section section-highlight">
+  <div class="link-card">
+    <h2>Explore OpenQuality</h2>
+    <p class="link-description">
+      Jump straight into the area you care about—each link opens a deeper tour while a short summary explains what you will find there.
+    </p>
+    {% set exploreLinks = [
+      {
+        cta: 'Features',
+        url: '/features/',
+        icon: '✨',
+        heading: 'Capabilities',
+        description: 'See the feature lineup, CNCF-grade presentation, and how OpenQuality makes quality evidence accessible across teams.',
+        variant: 'btn-primary'
+      },
+      {
+        cta: 'Use Cases',
+        url: '/use-cases/',
+        icon: '🧭',
+        heading: 'Scenarios',
+        description: 'Match your pipeline to proven playbooks: CI/CD integrations, regression hunts, compliance reporting, and beyond.'
+      },
+      {
+        cta: 'Docs',
+        url: '/docs/',
+        icon: '📚',
+        heading: 'Documentation',
+        description: 'From API payloads to deployment guides, the docs keep engineers and platform teams aligned with minimal ramp.'
+      },
+      {
+        cta: 'Get Started',
+        url: '/get-started/',
+        icon: '🚀',
+        heading: 'Activation',
+        description: 'Run through the getting-started checklist, connect data sources, and share the live site with stakeholders.'
+      },
+      {
+        cta: 'GitHub',
+        url: 'https://github.com/open-quality',
+        icon: '💻',
+        heading: 'Source',
+        description: 'Visit GitHub for releases, issues, and contribution guidelines across the OpenQuality ecosystem.',
+        external: true
+      }
+    ] %}
+    <div class="link-stack">
+      {% for item in exploreLinks %}
+        <div class="link-item">
+          <a
+            class="btn btn-primary"
+            href="{{ item.url }}"
+            {% if item.external %}target="_blank" rel="noreferrer"{% endif %}
+          >
+            <span>{{ item.icon }} {{ item.cta }}</span>
+          </a>
+          <div class="link-item-description">
+            <div>
+              <h3>{{ item.heading }}</h3>
+              <p>{{ item.description }}</p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
     </div>
-    <div>
-      <h2>{{ highlights.problemStatements.solution.title }}</h2>
-      <p class="text-large">{{ highlights.problemStatements.solution.summary }}</p>
-      <ul class="feature-list">
-        {% for item in highlights.problemStatements.solution.bullets %}
-          <li>{{ item }}</li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section class="section section-dark">
-  <h2 class="section-title">Platform Features</h2>
-  <div class="grid-3">
-    {% for feature in highlights.features %}
-      <div class="card">
-        <div class="icon">{{ feature.icon }}</div>
-        <h3>{{ feature.title }}</h3>
-        <p>{{ feature.description }}</p>
-      </div>
-    {% endfor %}
-  </div>
-  <div class="cta-buttons" style="margin-top: 2rem;">
-    <a class="btn btn-primary" href="/features/">Explore all features</a>
-  </div>
-</section>
-
-<section class="section">
-  <h2 class="section-title">Use Cases</h2>
-  <div class="grid-2">
-    {% for useCase in highlights.useCases %}
-      <div class="card">
-        <h3>{{ useCase.title }}</h3>
-        <p>{{ useCase.description }}</p>
-      </div>
-    {% endfor %}
-  </div>
-  <div class="cta-buttons" style="margin-top: 2rem;">
-    <a class="btn btn-secondary" href="/use-cases/">See detailed scenarios</a>
-  </div>
-</section>
-
-<section class="section section-dark">
-  <h2 class="section-title">Built For</h2>
-  <div class="grid-2">
-    {% for audience in highlights.audiences %}
-      <div class="card">
-        <h3>{{ audience.title }}</h3>
-        <p>{{ audience.description }}</p>
-        <div class="benefit">{{ audience.benefit }}</div>
-      </div>
-    {% endfor %}
-  </div>
-</section>
-
-<section class="section">
-  <h2 class="section-title">Tech Stack</h2>
-  <div class="tech-stack">
-    {% for tech in highlights.techStack %}
-      <div class="tech-item">
-        <strong>{{ tech.label }}:</strong> {{ tech.value }}
-      </div>
-    {% endfor %}
   </div>
 </section>

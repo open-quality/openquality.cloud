@@ -6,7 +6,7 @@ Marketing site for OpenQuality, rebuilt with [Eleventy](https://www.11ty.dev/) a
 
 - **Eleventy 3** for static-site generation with Nunjucks templates.
 - **Vanilla Three.js** to power the plasma infinity hero animation.
-- **Markdown content** inside `content/` for articles and short social threads.
+- **Markdown blog posts** inside `src/blog/posts/` for articles and campaigns.
 - **GitHub Pages** deployment via `.github/workflows/deploy.yml`.
 
 ## Project Structure
@@ -14,13 +14,16 @@ Marketing site for OpenQuality, rebuilt with [Eleventy](https://www.11ty.dev/) a
 ```
 openquality.cloud/
 ├── CNAME                     # Custom domain passed through Eleventy
-├── content/                  # Long-form and short-form Markdown stories
 ├── public/                   # Favicons, logos, and other static assets
 ├── src/
 │   ├── _data/                # Site metadata + structured feature data
-│   ├── _includes/            # Layouts and hero component
+│   ├── _includes/            # Layouts (base, hero, blog posts)
 │   ├── assets/               # CSS, Three.js bundle, vendor modules
+│   ├── blog/
+│   │   ├── posts/            # Markdown sources for the blog
+│   │   └── post.njk          # Layout used by individual posts
 │   ├── docs.njk              # Documentation listing
+│   ├── blog.njk              # Blog index page
 │   ├── features.njk          # Feature overview page
 │   ├── get-started.njk       # Quick-start instructions
 │   ├── index.njk             # Homepage with hero + summaries
@@ -37,11 +40,9 @@ npm run build        # Generate the production site in dist/
 npm run preview      # Alternative watcher (same as dev)
 ```
 
-Edited Markdown in `content/` automatically refreshes the docs page thanks to Eleventy data binding.
-
 ## Authoring Guidelines
 
-- Drop marketing stories into `content/articles` or `content/short`. They show up on `/docs/` without extra wiring.
+- Drop marketing stories into `src/blog/posts/` with front matter (`title`, `date`, `summary`). Eleventy picks them up automatically for `/blog/` and individual permalinks.
 - Keep reusable copy (features, use cases, tech stack, quick start) inside `src/_data/highlights.js`. Pages consume the shared data so updates cascade automatically.
 - Global navigation + footer live in `src/_data/site.js`.
 - CSS resides in `src/assets/css/styles.css`; keep additions modular to avoid regressions.

@@ -22,16 +22,16 @@ permalink: /get-started/index.html
 <section class="section section-dark">
   <div class="grid-2">
     <div>
-      <h2>Local development tips</h2>
+      <h2>Integration checklist</h2>
       <ul class="feature-list">
-        <li>Use <code>npm run dev</code> to run Eleventy with hot reload while editing markdown.</li>
-        <li>Store marketing stories in <code>content/articles</code> or <code>content/short</code>.</li>
-        <li>Keep static assets like favicons in <code>public/</code>; Eleventy copies them verbatim.</li>
+        <li>Run <code>make run</code> for the API and <code>make dev-ui</code> for the web UI so you can validate ingest + dashboards together.</li>
+        <li>Seed demo data via <code>make migrate-example</code> before presenting feature tours to stakeholders.</li>
+        <li>Publish playbooks and social stories from <code>src/blog/posts</code> so go-to-market teams can ship updates through Git without extra tooling.</li>
       </ul>
     </div>
     <div>
       <h2>Deployment</h2>
-      <p class="text-large">GitHub Actions builds <code>dist/</code> and ships it to Pages. For manual previews, run <code>npm run build</code> and serve <code>dist/</code> locally.</p>
+      <p class="text-large">Use the bundled GitHub Actions workflow to run <code>npm run build</code> and publish the marketing site. If you prefer another CDN or static host, upload the <code>dist/</code> output from the same command.</p>
     </div>
   </div>
 </section>

@@ -6,6 +6,7 @@ module.exports = {
     { label: 'Features', url: '/features/' },
     { label: 'Use Cases', url: '/use-cases/' },
     { label: 'Docs', url: '/docs/' },
+    { label: 'Blog', url: '/blog/' },
     { label: 'Get Started', url: '/get-started/' },
     { label: 'GitHub', url: 'https://github.com/open-quality', external: true }
   ],

@@ -1,0 +1,25 @@
+---
+layout: layouts/base.njk
+title: Blog
+permalink: /blog/index.html
+---
+<section class="section">
+  <div class="page-intro">
+    <h1>Articles & Campaigns</h1>
+    <p>Real stories from the trenches—environment chaos, CI hard lessons, and the tiny wins that build trust in releases.</p>
+  </div>
+  <div class="blog-list">
+    {% for post in collections.blog %}
+      <article class="blog-card">
+        <p class="blog-card-date">{{ post.date | readableDate }}</p>
+        <h2>
+          <a href="{{ post.url }}">{{ post.data.title }}</a>
+        </h2>
+        <p class="blog-card-summary">{{ post.data.summary }}</p>
+        <a class="blog-card-link" href="{{ post.url }}">Read story →</a>
+      </article>
+    {% else %}
+      <p>No blog posts yet. Add Markdown files under <code>src/blog/</code>.</p>
+    {% endfor %}
+  </div>
+</section>

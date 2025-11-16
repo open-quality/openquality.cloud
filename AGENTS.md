@@ -1,26 +1,31 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-The marketing site lives under `src/`, where `main.tsx` boots the React tree and `App.tsx` contains the hero, feature grids, and Three.js motion logic; shared styles sit in `App.css` and `index.css`, while lightweight assets (logos, shaders) live in `src/assets/`. Markdown stories for campaigns are stored in `content/` (for example `content/articles/001-fintech.md`) and can be imported or copied into the UI. Static files, the custom domain entry, and any favicons go inside `public/`. Build artifacts appear in `dist/` during CI and are ignored locally. Platform automation is located in `.github/workflows/deploy.yml`, so treat that workflow and `vite.config.ts` as part of the deployment contract.
+The site is built with Eleventy. All templates and data live under `src/`: layouts in `_includes/`, metadata in `_data/`, CSS/JS in `assets/`, and content pages such as `features.njk` or `use-cases.njk`. Blog posts now live in `src/blog/posts/` as Markdown with front matter; Eleventy turns each file into `/blog/<slug>/` automatically and the listing page (`src/blog.njk`) consumes the shared `collections.blog` data. Static assets plus the `CNAME` file stay in `public/`, and compiled output lands in `dist/`. GitHub Pages deployment is wired up in `.github/workflows/deploy.yml`.
 
 ## Build, Test, and Development Commands
-- `npm install` — sync dependencies before any other action.
-- `npm run dev` — start the Vite dev server at `http://localhost:5173` for live reload and WebGL inspection.
-- `npm run lint` — run ESLint with the repo’s config (`eslint.config.js` ignores `dist/`) to enforce hooks and React refresh rules.
-- `npm run build` — execute the TypeScript project references plus `vite build`; run this before every PR to ensure the GitHub Pages workflow will succeed.
-- `npm run preview` — serve the output in `dist/` to validate routing and asset loading exactly as Pages will.
+- `npm install` — install Eleventy, Markdown tooling, and helper libs (`luxon`, etc.).
+- `npm run dev` — run Eleventy in watch mode with the local dev server.
+- `npm run build` — render the production-ready static site into `dist/`; always run before opening a PR.
+- `npm run preview` — optional second watcher identical to `dev`, useful when you want a quick local server without hot reload logs.
+- `npm run clean` — remove `dist/` if you need to regenerate assets from scratch.
 
 ## Coding Style & Naming Conventions
-TypeScript is compiled in strict mode (`tsconfig.app.json`), so keep props typed explicitly and prefer derived types over `any`. Components and hooks use PascalCase (e.g., `ShiningStars`), utilities use camelCase, and constants that are effectively configuration (colors, easing values) should be UPPER_SNAKE_CASE. The codebase uses two-space indentation, React function components, and CSS custom properties defined in `App.css`; extend them instead of inlining values. Before committing, run `npm run lint` to take advantage of the React Hooks and Refresh plugins that shield the Three.js canvas from runtime regressions.
+Nunjucks templates and layouts live under `src/`; keep filenames kebab-cased (`blog.njk`, `post.njk`). Front matter for posts must include `title`, `date`, and `summary` so the blog listing renders clean metadata. CSS is authored in `src/assets/css/styles.css` with two-space indentation and heavy use of CSS custom properties—extend those variables rather than adding hard-coded colors. Client-side JavaScript lives in `src/assets/js/`; modules are ES modules (`type="module"`) and should guard against missing DOM nodes (as the nav + lightning scripts do). Markdown files should use GitHub-flavored syntax and rely on Eleventy’s auto-formatting rather than inline HTML unless necessary.
 
 ## Testing Guidelines
-There is no dedicated Jest/Vitest suite yet, so lean on three layers of validation: TypeScript strictness, ESLint, and manual QA. For UI or animation changes, capture steps (e.g., “open `/` and verify the star field animates smoothly”) in the PR description and test both desktop and mobile breakpoints under `npm run dev`. When adding data-driven sections sourced from `content/`, verify markdown escapes and run `npm run preview` to ensure static asset resolution works without dev-server fallbacks. If you add a test harness, colocate specs next to components inside `src/` and name them `*.test.tsx`.
+There is no automated test harness—treat `npm run build` plus responsive QA as the minimum standard. For each change, verify:
+- Eleventy builds without warnings.
+- The lightning hero renders smoothly on desktop + mobile widths.
+- Dropdown navigation and the mobile hamburger operate correctly.
+- New blog posts render both on `/blog/` and their individual permalinks.
+Document manual steps in the PR description. If you add scriptable behavior, prefer lightweight DOM tests or linting hooks colocated with the script (e.g., `src/assets/js/`).
 
 ## Commit & Pull Request Guidelines
 Git history follows a Conventional Commits flavor (`feat:`, `fix:`, `chore:`), so continue using imperative, lower-case subjects under 72 characters (e.g., `feat: refresh hero copy`). Branch names such as `feature/animated-stars` make triage easier. Every PR should: link its GitHub issue if one exists, summarize the change, attach screenshots or short clips for visual tweaks, list manual test steps, and confirm `npm run build` passed locally. Keep individual PRs scoped (copy update, animation tweak, config change) so the Pages workflow in `deploy.yml` can be audited quickly.
 
 ## Deployment & Configuration Notes
-Deployments flow through GitHub Pages via `.github/workflows/deploy.yml`, which assumes the production domain `openquality.cloud`. Never delete `public/CNAME` unless you also update `vite.config.ts` `base` for a repo-hosted deployment. The `dist/` directory must stay untracked—CI will regenerate it—and static assets referenced from markdown should be copied into `public/` to be served by Pages. Changes to analytics, meta tags, or custom scripts belong in `index.html` so they survive Vite rebuilds.
+Deployments flow through GitHub Pages via `.github/workflows/deploy.yml`, which installs dependencies and runs `npm run build`. Keep `public/CNAME` intact unless the production domain changes, and ensure `dist/` stays untracked because CI publishes fresh artifacts. When introducing analytics, favicons, or other static resources, add them to `public/` so Eleventy copies them verbatim. Navigation links—including the Blog submenu—are defined in `src/_data/site.js`; update that file whenever pages or collections move.
 
 # Global Coding Standards
 

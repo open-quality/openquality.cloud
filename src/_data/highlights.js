@@ -50,23 +50,7 @@ module.exports = {
     { label: 'CLI Tools', value: 'Cobra with go-pretty rendering' }
   ],
   quickStart: [
-    '# 1. Install dependencies',
-    'make init',
-    '',
-    '# 2. Build BackOffice tool',
-    'make build-bo',
-    '',
-    '# 3. Setup database',
-    'make setup',
-    'make migrate-example',
-    '',
-    '# 4. Run backend',
-    'make run',
-    '',
-    '# 5. Run frontend (separate terminal)',
-    'make dev-ui',
-    '',
-    '# Access at http://localhost:9000'
+    '# COMING SOON!'
   ],
   docsSections: [
     { title: 'Architecture Overview', body: 'Understand the service boundaries (core API, CLI, UI) and how deployments plug into your platform teams.' },
