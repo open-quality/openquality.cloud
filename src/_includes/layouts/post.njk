@@ -2,8 +2,7 @@
 layout: layouts/base.njk
 ---
 <article class="blog-post">
-  {% set imageSource = page.inputPath | replace('.md', '.jpg') %}
-  {% if imageSource | assetExists %}
+  {% if page.inputPath | replace('.md', '.jpg') | assetExists %}
     <figure class="blog-post-media">
       <img class="blog-post-image" src="{{ page.filePathStem }}.jpg" alt="{{ title }}" loading="lazy" />
     </figure>

@@ -1,8 +1,35 @@
----
 layout: layouts/base.njk
 title: OpenQuality Cloud
 hero: true
----
+exploreLinks:
+  - cta: "Features"
+    url: "/features/"
+    icon: "✨"
+    heading: "Capabilities"
+    description: "See the feature lineup, CNCF-grade presentation, and how OpenQuality makes quality evidence accessible across teams."
+    variant: "btn-primary"
+  - cta: "Use Cases"
+    url: "/use-cases/"
+    icon: "🧭"
+    heading: "Scenarios"
+    description: "Match your pipeline to proven playbooks: CI/CD integrations, regression hunts, compliance reporting, and beyond."
+  - cta: "Docs"
+    url: "/docs/"
+    icon: "📚"
+    heading: "Documentation"
+    description: "From API payloads to deployment guides, the docs keep engineers and platform teams aligned with minimal ramp."
+  - cta: "Get Started"
+    url: "/get-started/"
+    icon: "🚀"
+    heading: "Activation"
+    description: "Run through the getting-started checklist, connect data sources, and share the live site with stakeholders."
+  - cta: "GitHub"
+    url: "https://github.com/open-quality"
+    icon: "💻"
+    heading: "Source"
+    description: "Visit GitHub for releases, issues, and contribution guidelines across the OpenQuality ecosystem."
+    external: true
+----
 <section class="section section-highlight">
   <div class="link-card">
     <div class="explore-heading">
@@ -14,45 +41,6 @@ hero: true
     <p class="link-description">
       Jump straight into the area you care about—each link opens a deeper tour while a short summary explains what you will find there.
     </p>
-    {% set exploreLinks = [
-      {
-        cta: 'Features',
-        url: '/features/',
-        icon: '✨',
-        heading: 'Capabilities',
-        description: 'See the feature lineup, CNCF-grade presentation, and how OpenQuality makes quality evidence accessible across teams.',
-        variant: 'btn-primary'
-      },
-      {
-        cta: 'Use Cases',
-        url: '/use-cases/',
-        icon: '🧭',
-        heading: 'Scenarios',
-        description: 'Match your pipeline to proven playbooks: CI/CD integrations, regression hunts, compliance reporting, and beyond.'
-      },
-      {
-        cta: 'Docs',
-        url: '/docs/',
-        icon: '📚',
-        heading: 'Documentation',
-        description: 'From API payloads to deployment guides, the docs keep engineers and platform teams aligned with minimal ramp.'
-      },
-      {
-        cta: 'Get Started',
-        url: '/get-started/',
-        icon: '🚀',
-        heading: 'Activation',
-        description: 'Run through the getting-started checklist, connect data sources, and share the live site with stakeholders.'
-      },
-      {
-        cta: 'GitHub',
-        url: 'https://github.com/open-quality',
-        icon: '💻',
-        heading: 'Source',
-        description: 'Visit GitHub for releases, issues, and contribution guidelines across the OpenQuality ecosystem.',
-        external: true
-      }
-    ] %}
     <div class="link-stack">
       {% for item in exploreLinks %}
         <div class="link-item">
