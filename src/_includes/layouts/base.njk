@@ -7,7 +7,11 @@
       {% if title %}{{ title }} · {{ site.title }}{% else %}{{ site.title }}{% endif %}
     </title>
     <meta name="description" content="{{ site.description }}" />
-    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link rel="icon" type="image/png" href="/oq_favicon_black_v1.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="stylesheet" href="/assets/css/styles.css" />
   </head>
   <body class="page-{{ page.fileSlug or 'home' }}">
@@ -19,6 +23,7 @@
               <img src="/logo.svg" alt="OpenQuality logo" />
               <span>{{ site.title }}</span>
             </a>
+            <a class="logo-badge" href="/soon/">Soon</a>
             <button
               class="nav-toggle"
               type="button"
@@ -47,7 +52,7 @@
                   {% endif %}
                   {{ item.label }}
                 </a>
-              {% endfor %}
+             {% endfor %}
             </div>
           </div>
         </div>

@@ -105,6 +105,33 @@ main {
   width: auto;
 }
 
+.logo-badge {
+  position: relative;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  padding: 0.08rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  margin-left: 0.5rem;
+}
+
+.logo-badge::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  transform: translateX(-100%) skewX(-15deg);
+  animation: logoBadgeShine 3.5s infinite;
+  opacity: 0.8;
+}
+
 .nav-links {
   display: flex;
   gap: 2rem;
@@ -242,13 +269,25 @@ main {
 }
 
 .btn-secondary {
-  background: transparent;
-  border-color: var(--primary-blue);
-  color: var(--primary-blue);
+  background: rgba(0, 0, 0, 0.5);
+  border-color: var(--primary-purple);
+  color: var(--primary-purple);
 }
 
 .btn-secondary:hover {
-  background: var(--primary-blue);
+  background: var(--primary-purple);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.btn-github {
+  background: rgba(0, 0, 0, 0.5);
+  border-color: #b77bff;
+  color: #b77bff;
+}
+
+.btn-github:hover {
+  background: #b77bff;
   color: #fff;
   transform: translateY(-2px);
 }
@@ -282,6 +321,22 @@ main {
 .link-card h2 {
   font-size: 3rem;
   margin-bottom: 1.5rem;
+}
+
+.explore-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.explore-heading h2 {
+  margin-bottom: 0;
+}
+
+.explore-logo img {
+  width: 80px;
+  height: auto;
 }
 
 .link-description {
@@ -324,6 +379,10 @@ main {
 
 .link-item-description p {
   color: var(--text-secondary);
+}
+
+.soon-cta {
+  margin-top: 3rem;
 }
 
 .section-title {
@@ -599,6 +658,15 @@ main {
   margin: 2rem 0;
 }
 
+.blog-post-footer {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
 @media (max-width: 768px) {
   body.nav-open {
     overflow: hidden;
@@ -673,6 +741,36 @@ main {
     justify-content: center;
   }
 }
+
+@keyframes logoBadgeShine {
+  0% {
+    transform: translateX(-120%) skewX(-15deg);
+  }
+  50% {
+    transform: translateX(150%) skewX(-15deg);
+  }
+  100% {
+    transform: translateX(150%) skewX(-15deg);
+  }
+}
+
+@keyframes exploreOrbit {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  25% {
+    transform: translateY(-6px) translateX(4px);
+  }
+  50% {
+    transform: translateY(0) translateX(8px);
+  }
+  75% {
+    transform: translateY(6px) translateX(4px);
+  }
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+}
 .nav-icon {
   font-style: normal;
   margin-right: 0.35rem;
@@ -690,4 +788,18 @@ main {
 .nav-links a:hover .nav-github-icon,
 .nav-links a[aria-current="page"] .nav-github-icon {
   fill: var(--text-primary);
+}
+.soon-grid {
+  gap: 1.5rem;
+}
+
+.soon-card {
+  min-height: 220px;
+}
+.cta-buttons {
+  display: flex;
+  gap: 1.75rem;
+  justify-content: center;
+  margin-top: 2.5rem;
+  flex-wrap: wrap;
 }
