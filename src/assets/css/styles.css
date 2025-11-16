@@ -199,6 +199,10 @@ main {
   font-weight: 800;
   margin-bottom: 1.5rem;
   line-height: 1.2;
+  color: #fff;
+  filter:
+    drop-shadow(0 0 6px rgba(0, 0, 0, 0.7))
+    drop-shadow(0 0 12px rgba(0, 0, 0, 0.4));
 }
 
 .hero .hero-subtitle {
@@ -374,6 +378,17 @@ main {
   border-radius: 12px;
   padding: 2rem;
   transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.use-case-card-with-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.use-case-icon {
+  font-size: 3rem;
+  margin-bottom: 0.25rem;
 }
 
 .card:hover {
@@ -657,4 +672,22 @@ main {
     width: 100%;
     justify-content: center;
   }
+}
+.nav-icon {
+  font-style: normal;
+  margin-right: 0.35rem;
+  font-size: 0.95rem;
+}
+
+.nav-github-icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 0.35rem;
+  fill: var(--text-secondary);
+  transition: fill 0.3s ease;
+}
+
+.nav-links a:hover .nav-github-icon,
+.nav-links a[aria-current="page"] .nav-github-icon {
+  fill: var(--text-primary);
 }

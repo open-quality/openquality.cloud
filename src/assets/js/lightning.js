@@ -201,8 +201,8 @@ const bootLightning = () => {
   const canvas = document.querySelector('[data-lightning-canvas]')
   if (!canvas) return null
   return new LightningBackground(canvas, {
-    hue: 230,
-    xOffset: 0,
+    hue: 255,
+    xOffset: -0.5,
     speed: 1,
     intensity: 1,
     size: 1,

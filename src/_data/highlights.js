@@ -30,12 +30,12 @@ module.exports = {
     { icon: '🔒', title: 'Own your data', description: 'Self-hosted by default, so compliance and audits stay in your control.' }
   ],
   useCases: [
-    { title: 'CI/CD integration', description: 'Post execution payloads from any pipeline to keep a unified quality log.' },
-    { title: 'Multi-environment testing', description: 'Track identical suites across dev, staging, and prod to spot drifts early.' },
-    { title: 'Regression analysis', description: 'Identify brittle tests and surface failure trends that block releases.' },
-    { title: 'Release confidence', description: 'Check health snapshots before promoting artifacts downstream.' },
-    { title: 'Compliance & audits', description: 'Maintain immutable execution history for regulated industries.' },
-    { title: 'Team collaboration', description: 'Share curated dashboards with QA, platform, and product teams.' }
+    { icon: '⚙️', title: 'CI/CD integration', description: 'Post execution payloads from any pipeline to keep a unified quality log.' },
+    { icon: '🌐', title: 'Multi-environment testing', description: 'Track identical suites across dev, staging, and prod to spot drifts early.' },
+    { icon: '📉', title: 'Regression analysis', description: 'Identify brittle tests and surface failure trends that block releases.' },
+    { icon: '✅', title: 'Release confidence', description: 'Check health snapshots before promoting artifacts downstream.' },
+    { icon: '📜', title: 'Compliance & audits', description: 'Maintain immutable execution history for regulated industries.' },
+    { icon: '🤝', title: 'Team collaboration', description: 'Share curated dashboards with QA, platform, and product teams.' }
   ],
   audiences: [
     { title: 'Product & Platform Teams', description: 'Teams scaling testing beyond spreadsheets.', benefit: 'Bring enterprise capability without vendor lock-in.' },

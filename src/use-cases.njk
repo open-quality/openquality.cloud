@@ -10,7 +10,10 @@ permalink: /use-cases/index.html
   </div>
   <div class="grid-2">
     {% for useCase in highlights.useCases %}
-      <div class="card">
+      <div class="card use-case-card-with-icon">
+        <div class="use-case-icon">
+          {{ useCase.icon }}
+        </div>
         <h3>{{ useCase.title }}</h3>
         <p>{{ useCase.description }}</p>
       </div>
